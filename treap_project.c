@@ -154,7 +154,7 @@ void display(struct TreapNode* root){
 int main()
 { 
    int data;
-   srand(time(NULL));//sets the seed value for rand function
+   srand(time(NULL));//sets the computers internal clock as seed value for rand function
  while(1){
      printf("Press 'S' to  search a node,I to Insert a node ,'R' to delete a node, 'D' for displaying current heap or 'E' for exit:");
     char tsk;
