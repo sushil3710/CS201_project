@@ -30,9 +30,9 @@ struct TreapNode *L_Rotate(struct TreapNode *y)
                                                   struct TreapNode *x = y->right;
                                                    struct TreapNode *temp= x->left;
                    
-                                                  // left rotation
+                                                  //left rotation
                                                   x->left = y;
-                                                  y->right = temp;
+                                                  y->right = temp:
  
                                                   return x;
                                                  }
