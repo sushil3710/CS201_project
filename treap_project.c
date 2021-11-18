@@ -12,19 +12,6 @@ struct TreapNode{
  //global pointer for root of our treap
 struct TreapNode *root=NULL;
 
-//function to create a new treap node 
-struct TreapNode* getNode(int data)
-                                  {      //memory allocation for the node
-                                   struct TreapNode* temp =( struct TreapNode*)malloc(sizeof(struct TreapNode)); 
-                                   temp->key = data;
-                                       //using rand() function to generate random priority for a node
-                                   temp->priority = rand()%100;
-                                   temp->left = NULL;
-                                   temp->right = NULL;
-     
-                                   return temp;
-                                  }
-
 //function to right rotate subtree with root y
 struct TreapNode *R_Rotate(struct TreapNode *y)
                                                {
@@ -43,14 +30,25 @@ struct TreapNode *L_Rotate(struct TreapNode *y)
                                                   struct TreapNode *x = y->right;
                                                    struct TreapNode *temp= x->left;
                    
-                                                  //left rotation
+                                                  // left rotation
                                                   x->left = y;
-                                                  y->right = temp:
+                                                  y->right = temp;
  
                                                   return x;
                                                  }
  
-
+//function to create a new treap node 
+struct TreapNode* getNode(int data)
+                                  {      //memory allocation for the node
+                                   struct TreapNode* temp =( struct TreapNode*)malloc(sizeof(struct TreapNode)); 
+                                   temp->key = data;
+                                       //using rand() function to generate random priority for a node
+                                   temp->priority = rand()%100;
+                                   temp->left = NULL;
+                                   temp->right = NULL;
+     
+                                   return temp;
+                                  }
  
 //search function to search a particular node if present
 struct TreapNode* search(struct TreapNode* root, int data)
@@ -154,13 +152,14 @@ void display(struct TreapNode* root){
 int main()
 { 
    int data;
-   srand(time(NULL));//sets the computers internal clock as seed value for rand function
+   srand(time(NULL));//sets the seed value for rand function
  while(1){
      printf("Press 'S' to  search a node,I to Insert a node ,'R' to delete a node, 'D' for displaying current heap or 'E' for exit:");
     char tsk;
         scanf("%s",&tsk);
    
       if(tsk=='S'){ 
+          if(root==NULL){printf("Treap is empty!! Insert first..\n");continue;}
           printf("Enter the key of node to be searched:");
           scanf("%d",&data);
          struct TreapNode*temp=search(root,data);
@@ -170,18 +169,21 @@ int main()
       if(tsk=='I'){
                     printf("Enter the key of node to be Inserted:");
                         scanf("%d",&data);
-                       root= Insert_Tnode(root,data);
+                      root=Insert_Tnode(root,data);
                      printf("Insertion done!!\n");
                      
 
       }
-      if(tsk=='R'){
+      if(tsk=='R'){ 
+          if(root==NULL){printf("Treap is empty!! Insert first..\n");continue;}
           printf("Enter the key of node to be deleted:");
            scanf("%d",&data);
-          root= Delete_Tnode(root,data);
+         root=Delete_Tnode(root,data);
+
              printf("Deletion done!!\n");
       }
       if(tsk=='D'){
+          if(root==NULL){printf("Treap is empty!! Insert first..\n");continue;}
             printf("The treap is displayed below:\n");
           display(root);
         
