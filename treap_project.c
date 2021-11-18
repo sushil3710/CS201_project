@@ -170,8 +170,7 @@ int main()
       if(tsk=='I'){
                     printf("Enter the key of node to be Inserted:");
                         scanf("%d",&data);
-                       if(root==NULL) root=Insert_Tnode(root,data);
-                     else  Insert_Tnode(root,data);
+                       root= Insert_Tnode(root,data);
                      printf("Insertion done!!\n");
                      
 
@@ -179,7 +178,7 @@ int main()
       if(tsk=='R'){
           printf("Enter the key of node to be deleted:");
            scanf("%d",&data);
-           Delete_Tnode(root,data);
+          root= Delete_Tnode(root,data);
              printf("Deletion done!!\n");
       }
       if(tsk=='D'){
