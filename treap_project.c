@@ -12,6 +12,19 @@ struct TreapNode{
  //global pointer for root of our treap
 struct TreapNode *root=NULL;
 
+//function to create a new treap node 
+struct TreapNode* getNode(int data)
+                                  {      //memory allocation for the node
+                                   struct TreapNode* temp =( struct TreapNode*)malloc(sizeof(struct TreapNode)); 
+                                   temp->key = data;
+                                       //using rand() function to generate random priority for a node
+                                   temp->priority = rand()%100;
+                                   temp->left = NULL;
+                                   temp->right = NULL;
+     
+                                   return temp;
+                                  }
+
 //function to right rotate subtree with root y
 struct TreapNode *R_Rotate(struct TreapNode *y)
                                                {
@@ -37,18 +50,7 @@ struct TreapNode *L_Rotate(struct TreapNode *y)
                                                   return x;
                                                  }
  
-//function to create a new treap node 
-struct TreapNode* getNode(int data)
-                                  {      //memory allocation for the node
-                                   struct TreapNode* temp =( struct TreapNode*)malloc(sizeof(struct TreapNode)); 
-                                   temp->key = data;
-                                       //using rand() function to generate random priority for a node
-                                   temp->priority = rand()%1000;
-                                   temp->left = NULL;
-                                   temp->right = NULL;
-     
-                                   return temp;
-                                  }
+
  
 //search function to search a particular node if present
 struct TreapNode* search(struct TreapNode* root, int data)
