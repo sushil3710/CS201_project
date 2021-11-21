@@ -185,14 +185,20 @@ int main()
            continue;}
           printf("Enter the key of node to be deleted:");
            scanf("%d",&data);
-         root=Delete_Tnode(root,data);
-
-             printf("Deletion done!!\n");
+           //to check if the node to be deleted is actually present
+          struct TreapNode*temp= search(root,data);
+           if(temp==NULL) printf("This node is not present in the Treap\n"); 
+          else  {
+                root=Delete_Tnode(root,data);
+                printf("Deletion done!!\n");
+                 }
       }
       if(tsk=='D'){//D to display the treap elements
+          
           if(root==NULL)
           {printf("Treap is empty!! Insert first..\n");
                          continue;}
+              
             printf("The treap is displayed below:\n");
           display(root);
         
