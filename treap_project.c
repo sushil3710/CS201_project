@@ -3,23 +3,23 @@
 #include <time.h>
 
   
-struct TreapNode{
-                    int key;
-                    int priority;
-                    struct TreapNode *left, *right;
+struct TreapNode{//creating a new data type for the treap node
+                    int key;//key to store the data inputed
+                    int priority;//to store randomly assigned number(priority) in the node
+                    struct TreapNode *left, *right;//two pointer for each node
                  };
  
- //global pointer for root of our treap
+ //global pointer for root of our treap initially assigned to NULL
 struct TreapNode *root=NULL;
 
 //function to right rotate subtree with root y
 struct TreapNode *R_Rotate(struct TreapNode *y)
                                                {
-                                                 struct  TreapNode *x = y->left;
-                                                 struct TreapNode  *temp = x->right;
+                                                 struct  TreapNode *x = y->left;//assign new x to roots left
+                                                 struct TreapNode  *temp = x->right;//assign new temp to x's right
                                                 //right rotation
-                                                 x->right = y;
-                                                 y->left = temp;
+                                                 x->right = y;//now x's right is assigned the root
+                                                 y->left = temp;//assignn  temp to the root's left
                                                  
                                                  return x;
                                                 }
@@ -27,21 +27,21 @@ struct TreapNode *R_Rotate(struct TreapNode *y)
 //function to left rotate subtree with root y
 struct TreapNode *L_Rotate(struct TreapNode *y)
                                                  {
-                                                  struct TreapNode *x = y->right;
-                                                   struct TreapNode *temp= x->left;
+                                                  struct TreapNode *x = y->right;//assign new x to root's right
+                                                   struct TreapNode *temp= x->left;//assign new temp to x's left
                    
                                                   // left rotation
-                                                  x->left = y;
-                                                  y->right = temp;
+                                                  x->left = y;//now assign x's left to root
+                                                  y->right = temp;//now assign temp to root's right 
  
                                                   return x;
                                                  }
  
 //function to create a new treap node 
 struct TreapNode* getNode(int data)
-                                  {      //memory allocation for the node
+                                  {  //memory allocation for the node
                                    struct TreapNode* temp =( struct TreapNode*)malloc(sizeof(struct TreapNode)); 
-                                   temp->key = data;
+                                   temp->key = data;//input data to the key
                                        //using rand() function to generate random priority for a node
                                    temp->priority = rand()%100;
                                    temp->left = NULL;
@@ -53,21 +53,21 @@ struct TreapNode* getNode(int data)
 //search function to search a particular node if present
 struct TreapNode* search(struct TreapNode* root, int data)
                                                           {                                             
-                                                            if(root==NULL || root->key==data){
+                                                            if(root==NULL || root->key==data){//if the root is null or the key of root contains the data value
                                                                                               return root;
                                                                                              }
                                                           
-                                                          if(data<root->key) {
+                                                          if(data<root->key) {//if data<root->key then search in the left subtree of the root
                                                                               return   search(root->left,data);
                                                                              }
-                                                          else   {
+                                                          else   {//if data>root->key then search in the right subtree of the root
                                                                   return   search(root->right,data);
                                                                  }
     
                                                           }
  
 //function to Insert node a treapnode
-struct TreapNode* Insert_Tnode(struct TreapNode* root, int data ){     //returning a new node if root is NULL
+struct TreapNode* Insert_Tnode(struct TreapNode* root, int data ){     //returning a new node with data in the key of the root if the  root is NULL
                                                             if (root==NULL){ 
                                                                             return getNode(data);
                                                                            }
@@ -79,8 +79,8 @@ struct TreapNode* Insert_Tnode(struct TreapNode* root, int data ){     //returni
                                                                                                                              root = R_Rotate(root);
                                                                                                                             }
                                                                                   }
-                                                                                  //if data is greater than root->key
-                                                             else{ 
+                                                                                  
+                                                             else{ //if data is greater than root->key
                                                                    root->right = Insert_Tnode(root->right, data);
                                                                   //adjusting heap priority property i.e left rotating if right child(priority)>root(priority)
                                                                    if (root->right->priority > root->priority){
@@ -93,17 +93,18 @@ struct TreapNode* Insert_Tnode(struct TreapNode* root, int data ){     //returni
 //function to delete a particular node
 struct TreapNode* Delete_Tnode(struct TreapNode* root, int data)
                                                                {
-                                                                if (root == NULL){
+                                                                if (root == NULL){//if the treap is empty
                                                                                 return root;
                                                                                  }
-                                                    //if data !=root->key
+                                                                //if data !=root->key and data<root->key then call function delete for the left subtree of the root
                                                                 if (data < root->key){
                                                                                      root->left = Delete_Tnode(root->left, data);
                                                                                      }
+                                                               //if data !=root->key and data>root->key then call function delete for the right subtree of the root
                                                                 else if (data > root->key){
                                                                                            root->right = Delete_Tnode(root->right, data);
                                                                                           }
-                                                    //if data==root->key 
+                                                               //if data==root->key and left subtree is empty
                                                                  else if (root->left == NULL){
                                                                                              struct TreapNode *temp = root->right;
                                                                                              //delete root
@@ -111,6 +112,7 @@ struct TreapNode* Delete_Tnode(struct TreapNode* root, int data)
                                                                                             //right child becomes root
                                                                                              root = temp;  
                                                                                             }
+                                                                //if data==root->key and right subtree is empty
                                                                 else if (root->right == NULL) {
                                                                                               struct TreapNode *temp = root->left;
                                                                                               //delete root
@@ -118,7 +120,8 @@ struct TreapNode* Delete_Tnode(struct TreapNode* root, int data)
                                                                                                //left child becomes root
                                                                                                root = temp;  
                                                                                              }
-                                                    //if data=root->key both left and right child are not NULL                                        
+                                                    //if data=root->key both left and right child are not NULL
+                                                                 
                                                                 else if (root->left->priority < root->right->priority)  {
                                                                                                                            root = L_Rotate(root);
                                                                                                                            root->left = Delete_Tnode(root->left, data);
@@ -135,7 +138,7 @@ struct TreapNode* Delete_Tnode(struct TreapNode* root, int data)
 void display(struct TreapNode* root){
                                     if (root!=NULL)
                                             {
-                                             display(root->left);
+                                             display(root->left);//to display the left child first
                                              printf("\n Node key is:%d  Priority is:%d ",root->key,root->priority);
        
                                     if (root->left!=NULL)
@@ -144,7 +147,7 @@ void display(struct TreapNode* root){
                                      if (root->right!=NULL)
                                             printf("  Right child:%d",root->right->key);
            
-                                               display(root->right);
+                                               display(root->right);//then display right child
                                            }
                                    }
  
@@ -158,15 +161,17 @@ int main()
     char tsk;
         scanf("%s",&tsk);
    
-      if(tsk=='S'){ 
-          if(root==NULL){printf("Treap is empty!! Insert first..\n");continue;}
+      if(tsk=='S'){//if tsk=S search operation will take place if root is not NULL and we have entered the Key to be serached
+          if(root==NULL)
+          {printf("Treap is empty!! Insert first..\n");
+           continue;}
           printf("Enter the key of node to be searched:");
           scanf("%d",&data);
          struct TreapNode*temp=search(root,data);
           if(temp==NULL) printf("Searched node is not present\n"); 
           else printf("Searched node is present\n");
       }
-      if(tsk=='I'){
+      if(tsk=='I'){//if tsk=I key will be inserted by calling Insert_Node function
                     printf("Enter the key of node to be Inserted:");
                         scanf("%d",&data);
                       root=Insert_Tnode(root,data);
@@ -174,22 +179,26 @@ int main()
                      
 
       }
-      if(tsk=='R'){ 
-          if(root==NULL){printf("Treap is empty!! Insert first..\n");continue;}
+      if(tsk=='R'){ //If tsk=R a key can be deleted from the treap
+          if(root==NULL)
+          {printf("Treap is empty!! Insert first..\n");
+           continue;}
           printf("Enter the key of node to be deleted:");
            scanf("%d",&data);
          root=Delete_Tnode(root,data);
 
              printf("Deletion done!!\n");
       }
-      if(tsk=='D'){
-          if(root==NULL){printf("Treap is empty!! Insert first..\n");continue;}
+      if(tsk=='D'){//D to display the treap elements
+          if(root==NULL)
+          {printf("Treap is empty!! Insert first..\n");
+                         continue;}
             printf("The treap is displayed below:\n");
           display(root);
         
           printf("\n");
       }
-          if(tsk=='E'){
+          if(tsk=='E'){//E to exit
           return -1;
       }
 
