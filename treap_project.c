@@ -35,7 +35,7 @@ struct TreapNode *L_Rotate(struct TreapNode *y)
                                                   y->right = temp;// assigns temp to root's right 
  
                                                   return x;
-                                                 }
+                                                  }
  
 //function to create a new treap node 
 struct TreapNode* getNode(int data)
